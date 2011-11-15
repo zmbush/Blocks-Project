@@ -1,1 +1,8 @@
 bin
+*.class
+*.aux
+*.toc
+*.lol
+*.dvi
+*.pdf
+*.log

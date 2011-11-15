@@ -1,3 +1,4 @@
+package edu.berkeley.eecs.inst.zipcodeman.blocks;
 
 public class Reporting {
 	private static int flagsOn = 0;

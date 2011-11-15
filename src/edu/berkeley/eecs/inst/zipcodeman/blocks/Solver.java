@@ -1,3 +1,4 @@
+package edu.berkeley.eecs.inst.zipcodeman.blocks;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

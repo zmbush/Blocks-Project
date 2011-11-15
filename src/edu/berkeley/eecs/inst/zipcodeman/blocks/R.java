@@ -1,3 +1,4 @@
+package edu.berkeley.eecs.inst.zipcodeman.blocks;
 
 public class R {
 	public static final String FLAG_NAMES[] = { "draw-board", "show-tries",

@@ -1,3 +1,4 @@
+package edu.berkeley.eecs.inst.zipcodeman.blocks;
 
 public class Block {
 	int x,y;
