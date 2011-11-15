@@ -16,7 +16,7 @@ public class Solver {
 	private Hashtable<Board, Boolean> seenConfigurations;
 	private LinkedList<Block> goalBlocks;
 	/**
-	 * @param args
+	 * @param args the arguments passed from the command line. 
 	 */
 	public static void main(String[] args) {
 		int filesStart = 0;
