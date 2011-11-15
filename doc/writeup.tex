@@ -1,0 +1,148 @@
+%        File: writeup.tex
+%     Created: Wed Oct 05 10:00 AM 2011 P
+% Last Change: Wed Oct 05 10:00 AM 2011 P
+%
+\documentclass[a4paper]{article}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{program}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\lstset{
+   backgroundcolor=\color{lbcolor},
+   tabsize=3,
+   % rulecolor=,
+   language=Java,
+   basicstyle=\scriptsize,
+   % upquote=true,
+   % aboveskip={1.5\baselineskip},
+   columns=fixed,
+   % showstringspaces=false,
+   % extendedchars=true,
+   breaklines=true,
+   % prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+   % frame=single,
+   % showtabs=false,
+   % showspaces=false,
+   % showstringspaces=false,
+   % identifierstyle=\ttfamily,
+   keywordstyle=\color[rgb]{0,0,1},
+   commentstyle=\color[rgb]{0.133,0.545,0.133},
+   stringstyle=\color[rgb]{0.627,0.126,0.941},
+} 
+\newcommand{\sourceRoot}{../src/}
+\newcommand{\myPackage}{}
+\newcommand{\myJPackage}{}
+\newcommand{\sourcePackage}[2]{  \subsection*{Package: #2}
+                                 \renewcommand{\myPackage}{#1}
+                                 \renewcommand{\myJPackage}{#2}}
+\newcommand{\sourceClass}[1]{    \lstinputlisting[caption=\myJPackage.#1]
+                                 {\sourceRoot\myPackage/#1}}
+\begin{document}
+\title{The Solving of the Simple Single Player Game Involving Sliding Blocks}
+\author{Zachary M. Bush}
+\maketitle
+\tableofcontents
+\lstlistoflistings
+\newpage
+\section{The Plan}
+\subsection{Checking For Goal Configuration}
+In this section we will simply discuss the plan for implementing the blocks 
+project. The basis of this algorithm will be to look through the list of the 
+goal orientation. For each goal position, look through the list of current 
+block positions and check if there is a block that is of the correct size and 
+in that position. 
+\begin{lstlisting}[caption=Checking for Goal Configuration]
+boolean isCorrect(Block [] currentBlocks, Block [] goalBlocks){
+   for(int i = 0; i < goalBlocks.length; i++){
+      boolean found = false;
+      for(int j = 0; j < currentBlocks.length; j++){
+         if(goalBlocks[i].equals(currentBlocks[j])){
+            found = true;
+            break;
+         }
+      }
+      if(!found){
+         return false; // If we haven't matched one of the goal blocks. 
+                       // Then the goal is not reached
+      }
+   }
+   return true;
+}
+\end{lstlisting}
+\subsection{Generate Possible Moves}
+To generate possible moves, we will need to look at each block individually. 
+For each block we need to look to the left and right for open spots, and 
+compare the number of open spots to the height of the block. If it is greater 
+than or equal to the height, then that is a possible move. (we will only 
+consider moving blocks one position at a time, to simplify the generation 
+process). The process then needs to be repeated for the above and below 
+comparing against the width. 
+\begin{lstlisting}[caption=Generate Possible Moves]
+Move [] possibleMoves(Block [] currentBlocks){
+   boolean occupiedBlocks[][] = new boolean[width][height];
+   // Set initial values to false.
+   for(i = 0; i < currentBlocks.length; i++){
+      for(x = 0; x < curentBlocks[i].width; x++){
+         int xpos = currentBlocks[i].x;
+         int ypos = currentBlocks[i].y;
+         for(y = 0; y < currentBlocks[i].height; y++){
+            occupiedBlocks[x + xpos][y + ypos] = true;
+         }
+      }
+   }
+   for(i = 0; i < currentBlocks.length; i++){
+      Block b = currentBlock[i];
+      boolean valid = true;
+      if(b.y > 0){
+         for(int x = 0; x < b.width; x++){
+            if(!occupiedBlocks[b.x+x][b.y-1]){
+               valid = false;
+               break;
+            }
+         }
+      }
+   }
+   // Repeat the process for left, right, and below. 
+}
+\end{lstlisting}
+
+\subsection{Decide what to do next}
+To decide which of the generated moves to use, we will simply choose the first 
+one in the list that hasn't yet been seen (this mechanism will be discussed in 
+subsection \ref{ssec:checkDup}), and try it. In future we may define a delta 
+function to chose the move that is ``closest'' to the goal (this may increase 
+efficiency).
+
+\subsection{Make and Unmake moves}
+Making and unmaking moves is fairly simple. There are two ways I can see to try 
+doing it: 
+\begin{enumerate}
+\item Create a copy of the board to make the move, and then unmaking would be 
+      just using the unmodified version.  (not memory efficient)
+\item Create a ``move'' procedure that takes a start position and a goal 
+      position. With that, we can use move(from, to) to make the move and use 
+      move(to, from) to unmake it. 
+\end{enumerate}
+
+\subsection{Detect Previously Visited configurations}
+With the class storing the state of the board, add a hashing function to allow 
+us to put it into a hashtable and later look it up. This is a place where some 
+optimizations could be done, but to get the code working, we will just convert 
+the board to a string and hash that string, using string's hashing function. 
+\label{ssec:checkDup}
+
+
+\sourcePackage{.}{main}
+\sourceClass{Solver.java}
+\sourceClass{Board.java}
+\sourceClass{Block.java}
+\sourceClass{Reporting.java}
+\sourceClass{Move.java}
+\sourceClass{R.java}
+
+
+\end{document}
+
+

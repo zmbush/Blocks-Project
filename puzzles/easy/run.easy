@@ -1,0 +1,404 @@
+#!/bin/csh
+# C shell script to try solving the puzzles in ~cs47b/lib/puzzles/easy.
+# Copy this script into the directory that contains your Solver and
+# Checker classes.  Make sure this script is executable by saying
+#	chmod +x run.easy
+# if necessary.  Then just say
+#	try.easys
+# to try them all.
+set d =  ~cs47b/lib/puzzles/easy
+echo "These should all say Verified"
+echo "*** Start with some solvable puzzles."
+echo ""
+echo "trying init.from.handout"
+java Solver $d/init.from.handout $d/goal.2.from.handout \
+| java Checker $d/init.from.handout $d/goal.2.from.handout
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying 1x1"
+java Solver $d/1x1 $d/1x1.goal \
+| java Checker $d/1x1 $d/1x1.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying 1x2, one block"
+java Solver $d/1x2.one.block $d/1x2.one.block.goal \
+| java Checker $d/1x2.one.block $d/1x2.one.block.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying 1x2, two blocks"
+java Solver $d/1x2.two.blocks $d/1x2.two.blocks.goal \
+| java Checker $d/1x2.two.blocks $d/1x2.two.blocks.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying easy"
+java Solver $d/easy $d/easy.goal \
+| java Checker $d/easy $d/easy.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying full.1"
+java Solver $d/full.1 $d/easy.goal \
+| java Checker $d/full.1 $d/easy.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying big.block.1"
+java Solver $d/big.block.1 $d/big.block.1.goal \
+| java Checker $d/big.block.1 $d/big.block.1.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying big.block.2"
+java Solver $d/big.block.2 $d/big.block.2.goal \
+| java Checker $d/big.block.2 $d/big.block.2.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying big.block.3"
+java Solver $d/big.block.3 $d/big.block.3.goal \
+| java Checker $d/big.block.3 $d/big.block.3.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying big.block.4"
+java Solver $d/big.block.4 $d/big.block.4.goal \
+| java Checker $d/big.block.4 $d/big.block.4.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying big.tray.2"
+java Solver $d/big.tray.2 $d/big.tray.2.goal \
+| java Checker $d/big.tray.2 $d/big.tray.2.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying big.search.1"
+java Solver $d/big.search.1 $d/big.search.1.goal \
+| java Checker $d/big.search.1 $d/big.search.1.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying big.search.2"
+java Solver $d/big.search.2 $d/big.search.2.goal \
+| java Checker $d/big.search.2 $d/big.search.2.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying check.diff.blocks"
+java Solver $d/check.diff.blocks $d/check.diff.blocks.goal \
+| java Checker $d/check.diff.blocks $d/check.diff.blocks.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying enormous.full.1"
+java Solver $d/enormous.full.1 $d/enormous.full.goal.1 \
+| java Checker $d/enormous.full.1 $d/enormous.full.goal.1
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying enormous.full.1"
+java Solver $d/enormous.full.1 $d/enormous.full.goal.2 \
+| java Checker $d/enormous.full.1 $d/enormous.full.goal.2
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying forced.match.1"
+java Solver $d/forced.match.1 $d/forced.match.1.goal \
+| java Checker $d/forced.match.1 $d/forced.match.1.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying forced.match.1+90"
+java Solver $d/forced.match.1+90 $d/forced.match.1+90.goal \
+| java Checker $d/forced.match.1+90 $d/forced.match.1+90.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying forced.match.2"
+java Solver $d/forced.match.2 $d/forced.match.2.goal \
+| java Checker $d/forced.match.2 $d/forced.match.2.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying immed.match.0"
+java Solver $d/immed.match.0 $d/immed.match.0.goal \
+| java Checker $d/immed.match.0 $d/immed.match.0.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying immed.match.1"
+java Solver $d/immed.match.1 $d/immed.match.1.goal \
+| java Checker $d/immed.match.1 $d/immed.match.1.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying immed.match.2"
+java Solver $d/immed.match.2 $d/immed.match.2.goal \
+| java Checker $d/immed.match.2 $d/immed.match.2.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying immed.match.2+90"
+java Solver $d/immed.match.2+90 $d/immed.match.2+90.goal \
+| java Checker $d/immed.match.2+90 $d/immed.match.2+90.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying immed.match.2+180"
+java Solver $d/immed.match.2+180 $d/immed.match.2+180.goal \
+| java Checker $d/immed.match.2+180 $d/immed.match.2+180.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying immed.match.2+270"
+java Solver $d/immed.match.2+270 $d/immed.match.2+270.goal \
+| java Checker $d/immed.match.2+270 $d/immed.match.2+270.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying instant.match.0"
+java Solver $d/instant.match.0 $d/instant.match.0.goal \
+| java Checker $d/instant.match.0 $d/instant.match.0.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying instant.match.1"
+java Solver $d/instant.match.1 $d/instant.match.1.goal \
+| java Checker $d/instant.match.1 $d/instant.match.1.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying instant.match.1+90"
+java Solver $d/instant.match.1+90 $d/instant.match.1+90.goal \
+| java Checker $d/instant.match.1+90 $d/instant.match.1+90.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying instant.match.2"
+java Solver $d/instant.match.2 $d/instant.match.2.goal \
+| java Checker $d/instant.match.2 $d/instant.match.2.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying instant.match.3"
+java Solver $d/instant.match.3 $d/instant.match.3.goal \
+| java Checker $d/instant.match.3 $d/instant.match.3.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying instant.match.3+90"
+java Solver $d/instant.match.3+90 $d/instant.match.3+90.goal \
+| java Checker $d/instant.match.3+90 $d/instant.match.3+90.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying no.move.1"
+java Solver $d/no.move.1 $d/no.move.1.goal.6 \
+| java Checker $d/no.move.1 $d/no.move.1.goal.6
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying no.move.2"
+java Solver $d/no.move.2 $d/no.move.2.goal.6 \
+| java Checker $d/no.move.2 $d/no.move.2.goal.6
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying no.move.3"
+java Solver $d/no.move.3 $d/no.move.3.goal.6 \
+| java Checker $d/no.move.3 $d/no.move.3.goal.6
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying 140x140"
+java Solver $d/140x140 $d/140x140.goal \
+| java Checker $d/140x140 $d/140x140.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying small.search"
+java Solver $d/small.search $d/small.search.goal \
+| java Checker $d/small.search $d/small.search.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying small.search+90"
+java Solver $d/small.search+90 $d/small.search+90.goal \
+| java Checker $d/small.search+90 $d/small.search+90.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying tree+90"
+java Solver $d/tree+90 $d/tree+90.goal \
+| java Checker $d/tree+90 $d/tree+90.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying tree+180"
+java Solver $d/tree+180 $d/tree+180.goal \
+| java Checker $d/tree+180 $d/tree+180.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying tree+270"
+java Solver $d/tree+270 $d/tree+270.goal \
+| java Checker $d/tree+270 $d/tree+270.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "trying tree"
+java Solver $d/tree $d/tree.goal \
+| java Checker $d/tree $d/tree.goal
+if ($status != 0) echo "*** Wrong exit status"
+
+echo ""
+echo "*** Now try some unsolvable puzzles."
+echo ""
+echo "trying enormous.3"
+java Solver $d/enormous.3 $d/enormous.deadend.1
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying enormous.full.1"
+java Solver $d/enormous.full.1 $d/enormous.full.deadend.2
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying full.2"
+java Solver $d/full.2 $d/easy.goal 
+# | java Checker $d/full.2 $d/easy.goal
+if ($status == 1) then 
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying impossible.1"
+java Solver $d/impossible.1 $d/impossible.1.goal
+if ($status == 1) then 
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying impossible.1+90"
+java Solver $d/impossible.1+90 $d/impossible.1+90.goal
+if ($status == 1) then 
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying impossible.3"
+java Solver $d/impossible.3 $d/impossible.3.goal
+if ($status == 1) then 
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying impossible.3x4"
+java Solver $d/impossible.3x4 $d/impossible.3x4.goal.1
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying impossible.4"
+java Solver $d/impossible.4 $d/impossible.4.goal
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying impossible.4+90"
+java Solver $d/impossible.4+90 $d/impossible.4+90.goal
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying impossible.4+180"
+java Solver $d/impossible.4+180 $d/impossible.4+180.goal
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying impossible.4+270"
+java Solver $d/impossible.4+270 $d/impossible.4+270.goal
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying impossible.4x3"
+java Solver $d/impossible.4x3 $d/impossible.4x3.goal.1
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying no.move.1"
+java Solver $d/no.move.1 $d/no.move.1.deadend.goal.6
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying no.move.2"
+java Solver $d/no.move.2 $d/no.move.2.deadend.goal.6
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying no.move.3"
+java Solver $d/no.move.3 $d/no.move.3.deadend.goal.6
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
+echo ""
+echo "trying one.move.1"
+java Solver $d/one.move.1 $d/one.move.1.deadend.goal.6
+if ($status == 1) then
+    echo "Verified"
+else
+    echo "*** Wrong exit status"
+endif
+
