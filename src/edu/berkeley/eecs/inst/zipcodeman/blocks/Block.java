@@ -1,9 +1,34 @@
 package edu.berkeley.eecs.inst.zipcodeman.blocks;
 
 public class Block {
-	int x,y;
-	int hei,wid;
+	private int x,y;
+	private int hei,wid;
 	
+	public static void main(String [] args){
+		Block b = new Block("1 1 2 3");
+		
+		System.out.println(b);
+
+		System.out.println("Height: " + b.getHeight());
+		System.out.println("Width: " + b.getWidth());
+		System.out.println("X: " + b.getX());
+		System.out.println("Y: " + b.getY());
+		
+		b.move(Board.DOWN);
+		System.out.println("After move down");
+		System.out.println(b);
+		b.move(Board.UP);
+		System.out.println("up");
+		System.out.println(b);
+		b.move(Board.RIGHT);
+		System.out.println("Right");
+		System.out.println(b);
+		b.move(Board.LEFT);
+		System.out.println("Left");
+		System.out.println(b);
+		
+		System.out.println("Hash: " + b.hashCode());
+	}
 	Block(String bSpec){
 		Reporting.println("Block: " + bSpec, R.INITIALIZATION);
 		String[] dims = bSpec.split(" ");
