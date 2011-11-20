@@ -28,11 +28,6 @@ public class Board {
 			Move md = new Move(i, DOWN, c);
 			Move ml = new Move(i, LEFT, c);
 			Move mr = new Move(i, RIGHT, c);
-			
-			assert cb.canMoveP(mu, true) == cb.canMoveP(mu, false) : mu + " compared "  ;
-			//assert cb.canMoveP(md, true) == cb.canMoveP(md, false) : md + " compared "  ;
-			//assert cb.canMoveP(ml, true) == cb.canMoveP(ml, false) : ml + " compared "  ;
-			//assert cb.canMoveP(mr, true) == cb.canMoveP(mr, false) : mr + " compared "  ;
 		}
 	}
 	
@@ -187,76 +182,49 @@ public class Board {
 		return false;
 	}
 	public boolean canMoveP(Move m, boolean slow){
-		boolean retval = canMove(m, slow);
+		boolean retval = canMove(m);
 		System.out.println(m + " returned " + retval);
 		return retval;
 	}
 	public boolean canMove(Move m){
-		return canMove(m, true);
-	}
-	public boolean canMove(Move m, boolean slow){
 		int index = m.getBlockIndex();
 		int direction = m.getMovementDirection();
 		Block b = this.boardBlocks.get(index);
-		if(slow){
-			switch(direction){
-			case DOWN:
-				if(b.getY() + b.getHeight() >= blocks.length) return false;
-				for(int i = 0; i < b.getWidth(); i++){
-					if(blocks[b.getY() + b.getHeight()][b.getX() + i] != null){
-						return false;
-					}
+		switch(direction){
+		case DOWN:
+			if(b.getY() + b.getHeight() >= blocks.length) return false;
+			for(int i = 0; i < b.getWidth(); i++){
+				if(blocks[b.getY() + b.getHeight()][b.getX() + i] != null){
+					return false;
 				}
-				return true;
-			case UP:
-				if(b.getY() <= 0) return false;
-				for(int i = 0; i < b.getWidth(); i++){
-					if(blocks[b.getY() - 1][b.getX() + i] != null){
-						return false;
-					}
-				}
-				return true;
-			case LEFT:
-				if(b.getX() <= 0) return false;
-				for(int i = 0; i < b.getHeight(); i++){
-					if(blocks[b.getY() + i][b.getX() - 1] != null){
-						return false;
-					}
-				}
-				return true;
-			case RIGHT:
-				if(b.getX() + b.getWidth() >= blocks[0].length) return false;
-				for(int i = 0; i < b.getHeight(); i++){
-					if(blocks[b.getY() + i][b.getX() + b.getWidth()] != null){
-						return false;
-					}
-				}
-				return true;
 			}
-			return false;
-		}else{
-			for(int i = 0; i < this.boardBlocks.size(); i++){
-				if(i == index) continue;
-				Block c = this.boardBlocks.get(i);
-				switch(direction){
-				case UP:
-					if(c.getY() < b.getY() && 
-							c.getY() + c.getHeight() < b.getY()) continue;
-					if(c.getX() < b.getX() && 
-							c.getX() + c.getWidth() > b.getX()) return false; 
-					if(c.getX() > b.getX() && 
-							c.getX() < b.getX() + b.getWidth()) return false;
-					break;
-				case DOWN:
-					break;
-				case LEFT:
-					break;
-				case RIGHT:
-					break;
+			return true;
+		case UP:
+			if(b.getY() <= 0) return false;
+			for(int i = 0; i < b.getWidth(); i++){
+				if(blocks[b.getY() - 1][b.getX() + i] != null){
+					return false;
+				}
+			}
+			return true;
+		case LEFT:
+			if(b.getX() <= 0) return false;
+			for(int i = 0; i < b.getHeight(); i++){
+				if(blocks[b.getY() + i][b.getX() - 1] != null){
+					return false;
+				}
+			}
+			return true;
+		case RIGHT:
+			if(b.getX() + b.getWidth() >= blocks[0].length) return false;
+			for(int i = 0; i < b.getHeight(); i++){
+				if(blocks[b.getY() + i][b.getX() + b.getWidth()] != null){
+					return false;
 				}
 			}
 			return true;
 		}
+		return false;
 	}
 	public Move[] getMoves(){
 		LinkedList<Move> moves = new LinkedList<Move>();
