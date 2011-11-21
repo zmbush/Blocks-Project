@@ -182,11 +182,14 @@ public class Board {
 		return false;
 	}
 	public boolean canMoveP(Move m, boolean slow){
-		boolean retval = canMove(m);
+		boolean retval = canMove(m, slow);
 		System.out.println(m + " returned " + retval);
 		return retval;
 	}
 	public boolean canMove(Move m){
+		return canMove(m, true);
+	}
+	public boolean canMove(Move m, boolean slow){
 		int index = m.getBlockIndex();
 		int direction = m.getMovementDirection();
 		Block b = this.boardBlocks.get(index);
@@ -227,6 +230,7 @@ public class Board {
 		return false;
 	}
 	public Move[] getMoves(){
+		Reporting.println("Starting to Get Moves", R.MOVEMENT);
 		LinkedList<Move> moves = new LinkedList<Move>();
 		for(int i = 0; i < this.boardBlocks.size(); i++){
 			for(int dir = UP; dir < DIRECTIONS; dir++){
@@ -236,6 +240,7 @@ public class Board {
 				}
 			}
 		}
+		Reporting.println("Moves gotten", R.MOVEMENT);
 		return moves.toArray(new Move[0]);
 	}
 	public boolean unMoveBlock(Move move) {
@@ -252,16 +257,24 @@ public class Board {
 	
 	@Override
 	public int hashCode(){
+		Reporting.println("Entering Hash Function for Board", R.HASHING);
 		String toHash = "";
-		for(int y = 0; y < blocks.length; y++){
-			for(int x = 0; x < blocks[y].length; x++){
-				if(blocks[y][x] != null){
-					toHash += blocks[y][x].getHeight() + " " + blocks[y][x].getWidth();
-				}else{
-					toHash += "# #";
-				}
-			}
+		for(int i = 0; i < boardBlocks.size(); i++){
+			Block current =  boardBlocks.get(i);
+			toHash += current.getHeight() + " " + current.getWidth() + 
+					  " " + current.getX() + " " + current.getY();
 		}
+		// Really Slow for large boards. 
+//		for(int y = 0; y < blocks.length; y++){
+//			for(int x = 0; x < blocks[y].length; x++){
+//				if(blocks[y][x] != null){
+//					toHash += blocks[y][x].getHeight() + " " + blocks[y][x].getWidth();
+//				}else{
+//					toHash += "# #";
+//				}
+//			}
+//		}
+		Reporting.println("Leaving Hash Function for Board", R.HASHING);
 		int retval = toHash.hashCode();
 		return retval;
 	}

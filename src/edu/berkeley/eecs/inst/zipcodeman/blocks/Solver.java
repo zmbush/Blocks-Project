@@ -49,9 +49,19 @@ public class Solver {
 		}
 	}
 
+	/**
+	 * Instantiate class to solve board
+	 * @param initial filename of initial configuration
+	 * @param goal filename of goal configuration
+	 */
 	Solver(String initial, String goal){
+		// Load the initial configuration into Board Class
 		currentBoard = new Board(initial);
+		
+		// Keep track of configurations that have been seen before
 		seenConfigurations = new Hashtable<Board, Boolean>();
+		
+		// An array of Blocks to compare against
 		goalBlocks = new LinkedList<Block>();
 		try{
 			FileReader fr = new FileReader(goal);
@@ -88,21 +98,36 @@ public class Solver {
 	
 	private Stack<Move> getSolution(int depth) {
 		//if(depth > MAX_DEPTH) return null;
+		String prefix = ">";
+		for(int i = 0; i < depth; i++){
+			prefix += ">";
+		}
+		Reporting.println(prefix + "Looking for solution at depth: " + depth, R.SOLVE_FLOW);
 		if(!this.hasBeenSeen()){
+			Reporting.println(prefix + "Board has not been seen", R.SOLVE_FLOW);
 			currentBoard.printBoard();
+			Reporting.println(prefix + "Checking if board is solved", R.SOLVE_FLOW);
 			if(this.isSolved()){
+				Reporting.println(prefix + "Board Solved", R.SOLVE_FLOW);
 				return new Stack<Move>();
 			}
+			Reporting.println(prefix + "Board not solved", R.SOLVE_FLOW);
 			Move[] possibleMoves = currentBoard.getMoves();
+			Reporting.println(prefix + "Potential Moves fetched", R.SOLVE_FLOW);
 			for(int i = 0; i < possibleMoves.length; i++){
+				Reporting.println(prefix + " triyng move number " + i, R.SHOW_TRIES);
 				Reporting.println("Moving: " + possibleMoves[i], R.SHOW_TRIES);
 				currentBoard.moveBlock(possibleMoves[i]);
+				Reporting.println(prefix + "Block moved", R.SOLVE_FLOW);
 				Stack<Move> subSol = getSolution(depth + 1);
+				Reporting.println(prefix + "Recieved sub-solution", R.SOLVE_FLOW);
 				if(subSol != null){
+					Reporting.println(prefix + "Solution found!!!", R.SOLVE_FLOW);
 					subSol.push(possibleMoves[i]);
+					Reporting.println(prefix + "Added current move", R.SOLVE_FLOW);
 					return subSol;
 				}
-				
+				Reporting.println(prefix + "Solution not found... Continuing", R.SOLVE_FLOW);
 				currentBoard.unMoveBlock(possibleMoves[i]);
 			}
 		}
@@ -110,11 +135,16 @@ public class Solver {
 	}
 
 	private boolean hasBeenSeen() {
+		Reporting.println("** Copying Board", R.HASHING);
 		Board newBoard = new Board(currentBoard);
+		Reporting.println("** Board copied. Checking for duplicate", R.HASHING);
 		if(seenConfigurations.get(newBoard) != null){
+			Reporting.println("** Board found.", R.HASHING);
 			return true;
 		}else{
+			Reporting.println("** Board not found, Adding it to table", R.HASHING);
 			seenConfigurations.put(newBoard, true);
+			Reporting.println("** Board added.", R.HASHING);
 			return false;
 		}
 	}
