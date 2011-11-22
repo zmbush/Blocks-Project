@@ -14,16 +14,16 @@ public class Block {
 		System.out.println("X: " + b.getX());
 		System.out.println("Y: " + b.getY());
 		
-		b.move(Board.DOWN);
+		b.move(Board.DOWN, 1);
 		System.out.println("After move down");
 		System.out.println(b);
-		b.move(Board.UP);
+		b.move(Board.UP, 1);
 		System.out.println("up");
 		System.out.println(b);
-		b.move(Board.RIGHT);
+		b.move(Board.RIGHT, 1);
 		System.out.println("Right");
 		System.out.println(b);
-		b.move(Board.LEFT);
+		b.move(Board.LEFT, 1);
 		System.out.println("Left");
 		System.out.println(b);
 		
@@ -66,19 +66,24 @@ public class Block {
 		return y;
 	}
 
-	public void move(int direction) {
+	public Block getMove(int direction, int distance){
+		Block retval = new Block(this);
+		retval.move(direction, distance);
+		return retval;
+	}
+	public void move(int direction, int distance) {
 		switch(direction){
 		case Board.UP:
-			y--;
+			y -= distance;
 			break;
 		case Board.DOWN:
-			y++;
+			y += distance;
 			break;
 		case Board.LEFT:
-			x--;
+			x -= distance;
 			break;
 		case Board.RIGHT:
-			x++;
+			x += distance;
 			break;
 		}
 	}
@@ -116,5 +121,17 @@ public class Block {
 
 	public String toString(){
 		return x + "," + y + "," + wid + "," + hei + " ";
+	}
+	public boolean sameSize(Block before) {
+		if(this.wid == before.wid && 
+			this.hei == before.hei)
+			return true;
+		return false;
+	}
+	public float distanceFrom(Block aft) {
+		int x = this.x - aft.x;
+		int y = this.y - aft.y;
+		int inside = x*x + y*y;
+		return (float)Math.sqrt((double)inside);
 	}
 }

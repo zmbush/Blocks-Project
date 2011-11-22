@@ -20,8 +20,10 @@ public class R {
 	public static final int HASHING = 1 << 6;
 	public static final int ALL = -1;
 	
-	public static final int NOT_ENOUGH_ARGS = 1;
-	public static final int FILE_NOT_FOUND = 2;
-	public static final int SYNTAX_ERROR = 3;
+	public static final int IMPOSSIBLE = 1;
+	public static final int NOT_ENOUGH_ARGS = 2;
+	public static final int FILE_NOT_FOUND = 3;
+	public static final int SYNTAX_ERROR = 4;
+	public static final int MOVE_ERROR = 5;
 	public static final int UNKNOWN_ERROR = 99;
 }

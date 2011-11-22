@@ -10,16 +10,17 @@ public class Board {
 	int height, width;
 	Block blocks[][];
 	LinkedList<Block> boardBlocks;
+	private LinkedList<Block> goalBlocks;
 
 	public static final int UP = 0;
-	public static final int DOWN = 1;
-	public static final int LEFT = 2;
+	public static final int LEFT = 1;
+	public static final int DOWN = 2;
 	public static final int RIGHT = 3;
-	public static final String[] DIRECTION_NAMES = { "up", "down", "left", "right" };
+	public static final String[] DIRECTION_NAMES = { "up", "left", "down", "right" };
 	public static final int DIRECTIONS = 4;
 	
 	public static void main(String[] args) {
-		Board cb = new Board("puzzles/easy/big.block.4");
+		Board cb = new Board("puzzles/easy/big.block.4", "puzzles/easy/big.block.4.goal");
 		Reporting.flagOn("draw-board");
 		cb.printBoard();
 		for(int i = 0; i < cb.boardBlocks.size(); i++){
@@ -30,8 +31,16 @@ public class Board {
 			Move mr = new Move(i, RIGHT, c);
 		}
 	}
+	public boolean isSolved() {
+		for(int i = 0; i < goalBlocks.size(); i++){
+			if(!hasBlock(goalBlocks.get(i))){
+				return false;
+			}
+		}
+		return true;
+	}
 	
-	Board(String file){
+	Board(String file, String goal){
 		boardBlocks = new LinkedList<Block>();
 		try{
 			FileReader fr = new FileReader(file);
@@ -71,6 +80,35 @@ public class Board {
 		}catch(IOException ioe){
 			System.err.println("Something went wrong when opening the " +
 					"initialConfiguration File");
+			System.err.println();
+			System.err.println(ioe.getMessage());
+			System.exit(R.UNKNOWN_ERROR);
+		}catch(NumberFormatException nfe){
+			System.err.println("You must use integers in the config file");
+			System.err.println();
+			System.err.println(nfe.getMessage());
+			System.exit(R.SYNTAX_ERROR);			
+		}
+		// An array of Blocks to compare against
+		goalBlocks = new LinkedList<Block>();
+		try{
+			FileReader fr = new FileReader(goal);
+			BufferedReader br = new BufferedReader(fr);
+			
+			String line;
+			
+			while((line = br.readLine()) != null){
+				goalBlocks.add(new Block(line));
+			}
+		}catch(FileNotFoundException fnfe){
+			System.err.println("There was a problem opening the " +
+			"goalConfiguration File");
+			System.err.println();
+			System.err.println(fnfe.getMessage());
+			System.exit(R.FILE_NOT_FOUND);
+		}catch(IOException ioe){
+			System.err.println("Something went wrong when opening the " +
+					"goalConfiguration File");
 			System.err.println();
 			System.err.println(ioe.getMessage());
 			System.exit(R.UNKNOWN_ERROR);
@@ -150,6 +188,18 @@ public class Board {
 					displayLines[b.getY() * 2 + b.getHeight()*2]
 					             .setCharAt(b.getX()*3 + j + 2, Boxy.HORIZ);
 				}
+				for(int j = 0; j < b.getHeight()*2 - 2; j++){
+					displayLines[b.getY() * 2 + 2 + j]
+					             .setCharAt(b.getX()*3 + 1, Boxy.VERT);
+					displayLines[b.getY() * 2 + 2 + j]
+					             .setCharAt(b.getX()*3 + b.getWidth()*3, Boxy.VERT);
+				}
+				for(int x = 0; x < b.getWidth()*3 - 2; x++){
+					for(int y = 0; y < b.getHeight()*2 - 2; y++){
+						displayLines[b.getY()*2 + 2 + y]
+						    .setCharAt(b.getX()*3 + x + 2, ' ');
+					}
+				}
 			}
 			
 			Reporting.println("Current Board: ", R.DRAW_BOARD);
@@ -161,6 +211,7 @@ public class Board {
 	public boolean moveBlock(Move m){
 		if(canMove(m)){
 			int direction = m.getMovementDirection();
+			int distance = m.getDistance();
 			int index = m.getBlockIndex();
 			Block b = boardBlocks.get(index);
 			// Null out old postion. 
@@ -169,7 +220,7 @@ public class Board {
 					blocks[y + b.getY()][x + b.getX()] = null;
 				}
 			}
-			b.move(direction);
+			b.move(direction, distance);
 			m.setAfter(b);
 			// Assign new position
 			for(int x = 0; x < b.getWidth(); x++){
@@ -192,37 +243,46 @@ public class Board {
 	public boolean canMove(Move m, boolean slow){
 		int index = m.getBlockIndex();
 		int direction = m.getMovementDirection();
+		int distance = m.getDistance();
 		Block b = this.boardBlocks.get(index);
 		switch(direction){
 		case DOWN:
-			if(b.getY() + b.getHeight() >= blocks.length) return false;
-			for(int i = 0; i < b.getWidth(); i++){
-				if(blocks[b.getY() + b.getHeight()][b.getX() + i] != null){
-					return false;
+			if(b.getY() + b.getHeight() + distance - 1 >= blocks.length) return false;
+			for(int offset = 0; offset < distance; offset++){
+				for(int i = 0; i < b.getWidth(); i++){
+					if(blocks[b.getY() + b.getHeight() + offset][b.getX() + i] != null){
+						return false;
+					}
 				}
 			}
 			return true;
 		case UP:
-			if(b.getY() <= 0) return false;
-			for(int i = 0; i < b.getWidth(); i++){
-				if(blocks[b.getY() - 1][b.getX() + i] != null){
-					return false;
+			if(b.getY() - distance + 1 <= 0) return false;
+			for(int offset = 0; offset < distance; offset++){
+				for(int i = 0; i < b.getWidth(); i++){
+					if(blocks[b.getY() - offset - 1][b.getX() + i] != null){
+						return false;
+					}
 				}
 			}
 			return true;
 		case LEFT:
-			if(b.getX() <= 0) return false;
-			for(int i = 0; i < b.getHeight(); i++){
-				if(blocks[b.getY() + i][b.getX() - 1] != null){
-					return false;
+			if(b.getX() - distance + 1 <= 0) return false;
+			for(int offset = 0; offset < distance; offset++){
+				for(int i = 0; i < b.getHeight(); i++){
+					if(blocks[b.getY() + i][b.getX() - offset - 1] != null){
+						return false;
+					}
 				}
 			}
 			return true;
 		case RIGHT:
-			if(b.getX() + b.getWidth() >= blocks[0].length) return false;
-			for(int i = 0; i < b.getHeight(); i++){
-				if(blocks[b.getY() + i][b.getX() + b.getWidth()] != null){
-					return false;
+			if(b.getX() + b.getWidth() + distance - 1 >= blocks[0].length) return false;
+			for(int offset = 0; offset < distance; offset++){
+				for(int i = 0; i < b.getHeight(); i++){
+					if(blocks[b.getY() + i][b.getX() + b.getWidth() + offset] != null){
+						return false;
+					}
 				}
 			}
 			return true;
@@ -230,15 +290,47 @@ public class Board {
 		return false;
 	}
 	public Move[] getMoves(){
-		Reporting.println("Starting to Get Moves", R.MOVEMENT);
-		LinkedList<Move> moves = new LinkedList<Move>();
-		for(int i = 0; i < this.boardBlocks.size(); i++){
-			for(int dir = UP; dir < DIRECTIONS; dir++){
-				Move thisMove = new Move(i, dir, boardBlocks.get(i));
-				if(this.canMove(thisMove)){
-					moves.add(thisMove);
+		Move[] unsorted = getMovesUnsorted();
+		
+		for(int i = 0; i < unsorted.length; i++){
+			for(int j = 0; j < unsorted.length - i - 1; j++){
+				if(moveValue(unsorted[j]) > moveValue(unsorted[j + 1])){
+					Move temp = unsorted[j];
+					unsorted[j] = unsorted[j + 1];
+					unsorted[j + 1] = temp;
 				}
 			}
+		}
+		return unsorted;
+	}
+	public float moveValue(Move move) {
+		int score = 0;
+		Block aft = move.getAfter();
+		Block bef = move.getBefore();
+		float minDist = 100000;
+		float currentDist = 0;
+		for(int i = 0; i < this.goalBlocks.size(); i++){
+			if(this.goalBlocks.get(i).sameSize(bef))
+				if((currentDist = this.goalBlocks.get(i).distanceFrom(aft)) < minDist)
+					minDist = currentDist;
+		}
+		return minDist;
+	}
+
+	public Move[] getMovesUnsorted(){
+		Reporting.println("Starting to Get Moves", R.MOVEMENT);
+		LinkedList<Move> moves = new LinkedList<Move>();
+		int dist = Math.max(width, height);
+		while(dist != 0){
+			for(int i = 0; i < this.boardBlocks.size(); i++){
+				for(int dir = UP; dir < DIRECTIONS; dir++){
+					Move thisMove = new Move(i, dir, dist, boardBlocks.get(i));
+					if(this.canMove(thisMove)){
+						moves.add(thisMove);
+					}
+				}
+			}
+			dist--;
 		}
 		Reporting.println("Moves gotten", R.MOVEMENT);
 		return moves.toArray(new Move[0]);

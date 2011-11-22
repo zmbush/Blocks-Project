@@ -2,6 +2,9 @@ package edu.berkeley.eecs.inst.zipcodeman.blocks;
 
 public class Reporting {
 	private static int flagsOn = 0;
+	private static boolean slowOutput = false;
+	private static int slowCount = 0;
+	private static int slowMax = 1000;
 	
 	/**
 	 * Turn on a reporting flag
@@ -19,6 +22,8 @@ public class Reporting {
 			}
 			if(substring.equals("all")){
 				flagsOn |= R.ALL;
+			}else if(substring.equals("slow")){
+				slowOutput = true;
 			}else if(substring.equals("options")){
 				printFlags();
 				System.exit(0);
@@ -68,6 +73,14 @@ public class Reporting {
 	}
 	public static boolean canPrint(int flags){
 		if((flags & flagsOn) == flags){
+			if(slowOutput){
+				slowCount += 1;
+				if (slowCount > slowMax){
+					slowCount = 0;
+					return true;
+				}
+				return false;
+			}
 			return true;
 		}
 		return false;

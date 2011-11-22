@@ -5,6 +5,7 @@ public class Move {
 	private int direction;
 	private Block before;
 	private Block after;
+	private int distance;
 	
 	public static void main(String[] args){
 		Move m = new Move(0, Board.UP, new Block("1 1 1 1"));
@@ -19,15 +20,21 @@ public class Move {
 		System.out.println(m.getOutputString());
 	}
 	Move(int index, int direction, Block block){
+		this(index, direction, 1, block);
+	}
+	Move(int index, int direction, int distance, Block block){
 		this.blockIndex = index;
 		this.direction = direction;
+		this.distance = distance;
 		this.before = new Block(block);
+		this.after = this.before.getMove(this.direction, this.distance);
 	}
 
 	public Move(Move move) {
 		this.blockIndex = move.blockIndex;
 		this.direction = move.direction;
 		this.before = move.before;
+		this.distance = move.distance;
 		this.after = move.after;
 	}
 	public void setAfter(Block b){
@@ -42,7 +49,8 @@ public class Move {
 	}
 	
 	public String toString(){
-		return "(" + blockIndex + "," + Board.DIRECTION_NAMES[direction] + ")";
+		return "(" + blockIndex + "," + Board.DIRECTION_NAMES[direction]
+		           + "," + distance + ")";
 	}
 
 	public Move reverse() {
@@ -67,5 +75,14 @@ public class Move {
 	public String getOutputString() {
 		return String.format("%s %s %s %s", before.getY(), before.getX(), 
 				after.getY(), after.getX());
+	}
+	public int getDistance() {
+		return distance;
+	}
+	public Block getBefore() {
+		return before;
+	}
+	public Block getAfter() {
+		return after;
 	}
 }

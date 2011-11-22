@@ -11,10 +11,9 @@ import java.util.Stack;
 
 public class Solver {
 
-	private static final int MAX_DEPTH = 500;
+	private static final int MAX_DEPTH = 7000;
 	private Board currentBoard;
 	private Hashtable<Board, Boolean> seenConfigurations;
-	private LinkedList<Block> goalBlocks;
 	/**
 	 * @param args the arguments passed from the command line. 
 	 */
@@ -37,7 +36,7 @@ public class Solver {
 		    Solver s = new Solver(initial, goal);
 		    Stack<Move> solution = s.getSolution();
 		    if(solution == null){
-		    	System.exit(1);
+		    	System.exit(R.IMPOSSIBLE);
 		    }else{
 				while(!solution.empty()){
 					System.out.println(solution.pop().getOutputString());
@@ -56,79 +55,77 @@ public class Solver {
 	 */
 	Solver(String initial, String goal){
 		// Load the initial configuration into Board Class
-		currentBoard = new Board(initial);
+		currentBoard = new Board(initial, goal);
 		
 		// Keep track of configurations that have been seen before
 		seenConfigurations = new Hashtable<Board, Boolean>();
 		
-		// An array of Blocks to compare against
-		goalBlocks = new LinkedList<Block>();
-		try{
-			FileReader fr = new FileReader(goal);
-			BufferedReader br = new BufferedReader(fr);
-			
-			String line;
-			
-			while((line = br.readLine()) != null){
-				goalBlocks.add(new Block(line));
-			}
-		}catch(FileNotFoundException fnfe){
-			System.err.println("There was a problem opening the " +
-			"goalConfiguration File");
-			System.err.println();
-			System.err.println(fnfe.getMessage());
-			System.exit(R.FILE_NOT_FOUND);
-		}catch(IOException ioe){
-			System.err.println("Something went wrong when opening the " +
-					"goalConfiguration File");
-			System.err.println();
-			System.err.println(ioe.getMessage());
-			System.exit(R.UNKNOWN_ERROR);
-		}catch(NumberFormatException nfe){
-			System.err.println("You must use integers in the config file");
-			System.err.println();
-			System.err.println(nfe.getMessage());
-			System.exit(R.SYNTAX_ERROR);			
-		}
+		
 	}
 	
 	private Stack<Move> getSolution(){
-		return getSolution(0);
+		return getSolution(MAX_DEPTH);
 	}
 	
-	private Stack<Move> getSolution(int depth) {
-		//if(depth > MAX_DEPTH) return null;
-		String prefix = ">";
-		for(int i = 0; i < depth; i++){
-			prefix += ">";
-		}
+	private Stack<Move> getSolution(int maxDepth){
+		return getSolution(0, maxDepth);
+	}
+	
+	private Stack<Move> getSolution(int depth, int maxDepth) {
+		if(depth > maxDepth) return null;
+		String prefix = depth + "> ";
+		
 		Reporting.println(prefix + "Looking for solution at depth: " + depth, R.SOLVE_FLOW);
 		if(!this.hasBeenSeen()){
 			Reporting.println(prefix + "Board has not been seen", R.SOLVE_FLOW);
 			currentBoard.printBoard();
 			Reporting.println(prefix + "Checking if board is solved", R.SOLVE_FLOW);
-			if(this.isSolved()){
+			if(currentBoard.isSolved()){
 				Reporting.println(prefix + "Board Solved", R.SOLVE_FLOW);
 				return new Stack<Move>();
 			}
 			Reporting.println(prefix + "Board not solved", R.SOLVE_FLOW);
 			Move[] possibleMoves = currentBoard.getMoves();
-			Reporting.println(prefix + "Potential Moves fetched", R.SOLVE_FLOW);
+			Reporting.println(prefix + "Potential Moves fetched: ", R.SOLVE_FLOW);
+			for(int i = 0; i < possibleMoves.length; i++){
+				Reporting.println(prefix + "\t" + possibleMoves[i] + "\t" 
+				                  + currentBoard.moveValue(possibleMoves[i]), 
+				                  R.SOLVE_FLOW);
+			}
 			for(int i = 0; i < possibleMoves.length; i++){
 				Reporting.println(prefix + " triyng move number " + i, R.SHOW_TRIES);
 				Reporting.println("Moving: " + possibleMoves[i], R.SHOW_TRIES);
-				currentBoard.moveBlock(possibleMoves[i]);
-				Reporting.println(prefix + "Block moved", R.SOLVE_FLOW);
-				Stack<Move> subSol = getSolution(depth + 1);
-				Reporting.println(prefix + "Recieved sub-solution", R.SOLVE_FLOW);
-				if(subSol != null){
-					Reporting.println(prefix + "Solution found!!!", R.SOLVE_FLOW);
-					subSol.push(possibleMoves[i]);
-					Reporting.println(prefix + "Added current move", R.SOLVE_FLOW);
-					return subSol;
+				if(currentBoard.moveBlock(possibleMoves[i])){
+					Reporting.println(prefix + "Block moved", R.SOLVE_FLOW);
+				}else{
+					Reporting.println(prefix + "Movement Failed!" + possibleMoves[i], R.SOLVE_FLOW);
+					System.exit(R.MOVE_ERROR);
 				}
+				try{
+					Stack<Move> subSol = getSolution(depth + 1, maxDepth);
+					Reporting.println(prefix + "Recieved sub-solution", R.SOLVE_FLOW);
+					if(subSol != null){
+						Reporting.println(prefix + "Solution found!!!", R.SOLVE_FLOW);
+						subSol.push(possibleMoves[i]);
+						Reporting.println(prefix + "Added current move", R.SOLVE_FLOW);
+						return subSol;
+					}
+				}catch(StackOverflowError e){
+					Reporting.println(R.SOLVE_FLOW);
+					Reporting.println(R.SOLVE_FLOW);
+					Reporting.println(prefix + "Maximum Recursion Depth Reached...", R.SOLVE_FLOW);
+					Reporting.println(R.SOLVE_FLOW);
+					Reporting.println(R.SOLVE_FLOW);
+					//System.err.println(prefix + "Maximum Recursion depth Reached");
+				}
+				
 				Reporting.println(prefix + "Solution not found... Continuing", R.SOLVE_FLOW);
-				currentBoard.unMoveBlock(possibleMoves[i]);
+				if(currentBoard.unMoveBlock(possibleMoves[i])){
+					Reporting.println(prefix + "Block unmoved", R.SOLVE_FLOW);
+				}else{
+					Reporting.println(prefix + "Block unmove failed" + possibleMoves[i], R.SOLVE_FLOW);
+					System.exit(R.MOVE_ERROR);
+				}
 			}
 		}
 		return null;
@@ -147,14 +144,5 @@ public class Solver {
 			Reporting.println("** Board added.", R.HASHING);
 			return false;
 		}
-	}
-
-	private boolean isSolved() {
-		for(int i = 0; i < goalBlocks.size(); i++){
-			if(!currentBoard.hasBlock(goalBlocks.get(i))){
-				return false;
-			}
-		}
-		return true;
 	}
 }
