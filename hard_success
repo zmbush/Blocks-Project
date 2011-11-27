@@ -1,0 +1,6 @@
+#!/bin/bash
+
+SUCCESS=`cat hard_run | grep Verified | wc -l`
+TOTAL=`cat hard_run | grep "\-\-\- test" | wc -l`
+python -c "print \"$SUCCESS/$TOTAL (\" + str(($SUCCESS / float($TOTAL))*100) \
++ \"%)\""

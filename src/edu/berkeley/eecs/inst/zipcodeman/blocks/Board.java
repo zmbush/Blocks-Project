@@ -32,11 +32,14 @@ public class Board {
 		}
 	}
 	public boolean isSolved() {
+		Statistics.startTracking(S.SOLUTION_TEST);
 		for(int i = 0; i < goalBlocks.size(); i++){
 			if(!hasBlock(goalBlocks.get(i))){
+				Statistics.endTracking(S.SOLUTION_TEST);
 				return false;
 			}
 		}
+		Statistics.endTracking(S.SOLUTION_TEST);
 		return true;
 	}
 	
@@ -136,6 +139,7 @@ public class Board {
 		}
 	}
 	public void printBoard(){
+		Statistics.startTracking(S.PRINTING_BOARD);
 		if(Reporting.canPrint(R.DRAW_BOARD)){
 			StringBuilder displayLines[] = new StringBuilder[height*2+2];
 			for(int i = 0; i < height*2+2; i++){
@@ -201,14 +205,17 @@ public class Board {
 					}
 				}
 			}
-			
+			Statistics.endTracking(S.PRINTING_BOARD);
 			Reporting.println("Current Board: ", R.DRAW_BOARD);
 			for(int i = 0; i < displayLines.length; i++){
 				Reporting.println(displayLines[i].toString(), R.DRAW_BOARD);
 			}
+			return;
 		}
+		Statistics.endTracking(S.PRINTING_BOARD);
 	}
 	public boolean moveBlock(Move m){
+		Statistics.startTracking(S.MOVING_BLOCKS);
 		if(canMove(m)){
 			int direction = m.getMovementDirection();
 			int distance = m.getDistance();
@@ -228,8 +235,10 @@ public class Board {
 					blocks[y + b.getY()][x + b.getX()] = b;
 				}
 			}
+			Statistics.endTracking(S.MOVING_BLOCKS);
 			return true;
 		}
+		Statistics.endTracking(S.MOVING_BLOCKS);
 		return false;
 	}
 	public boolean canMoveP(Move m, boolean slow){
@@ -290,6 +299,7 @@ public class Board {
 		return false;
 	}
 	public Move[] getMoves(){
+		Statistics.startTracking(S.FIND_MOVES);
 		Move[] unsorted = getMovesUnsorted();
 		
 		for(int i = 0; i < unsorted.length; i++){
@@ -301,6 +311,7 @@ public class Board {
 				}
 			}
 		}
+		Statistics.endTracking(S.FIND_MOVES);
 		return unsorted;
 	}
 	public float moveValue(Move move) {
@@ -349,6 +360,7 @@ public class Board {
 	
 	@Override
 	public int hashCode(){
+		Statistics.startTracking(S.HASHING);
 		Reporting.println("Entering Hash Function for Board", R.HASHING);
 		String toHash = "";
 		for(int i = 0; i < boardBlocks.size(); i++){
@@ -368,18 +380,22 @@ public class Board {
 //		}
 		Reporting.println("Leaving Hash Function for Board", R.HASHING);
 		int retval = toHash.hashCode();
+		Statistics.endTracking(S.HASHING);
 		return retval;
 	}
 	
 	@Override
 	public boolean equals(Object obj){
+		Statistics.startTracking(S.COMPARING);
 		Board r = (Board)obj;
 		if(this.boardBlocks.size() != r.boardBlocks.size()) return false;
 		for(int i = 0; i < this.boardBlocks.size(); i++){
 			if(!boardBlocks.get(i).equals(r.boardBlocks.get(i))){
+				Statistics.endTracking(S.COMPARING);
 				return false;
 			}
 		}
+		Statistics.endTracking(S.COMPARING);
 		return true;
 	}
 	public boolean hasBlock(Block block) {

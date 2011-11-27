@@ -58,18 +58,26 @@ public class Reporting {
 	}
 	
 	public static void print(String out, int flags){
+		Statistics.startTracking(S.OUTPUT);
+		
 		if(canPrint(flags)){
 			System.out.print(out);
 		}
+		
+		Statistics.endTracking(S.OUTPUT);
 	}
 	
 	public static void println(int flags){
 		println("", flags);
 	}
 	public static void println(String out, int flags){
+		Statistics.startTracking(S.OUTPUT);
+		
 		if(canPrint(flags)){
 			System.out.println(out);
 		}
+		
+		Statistics.endTracking(S.OUTPUT);
 	}
 	public static boolean canPrint(int flags){
 		if((flags & flagsOn) == flags){

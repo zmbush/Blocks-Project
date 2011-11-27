@@ -10,7 +10,6 @@ import java.util.Stack;
 
 
 public class Solver {
-
 	private static final int MAX_DEPTH = 7000;
 	private Board currentBoard;
 	private Hashtable<Board, Boolean> seenConfigurations;
@@ -18,6 +17,18 @@ public class Solver {
 	 * @param args the arguments passed from the command line. 
 	 */
 	public static void main(String[] args) {
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable(){
+
+			@Override
+			public void run() {
+		    	Statistics.endTracking();
+				for(int i = 0; i < R.FLAG_NAMES.length; i++){
+					Reporting.flagOff(R.FLAG_NAMES[i]);
+				}
+				Statistics.printStats();
+			}
+			
+		}));
 		int filesStart = 0;
 		for(int i = 0; i < args.length; i++){
 			filesStart = i;
@@ -33,8 +44,14 @@ public class Solver {
 		    Reporting.println("Initial: " + initial, R.INITIALIZATION);
 		    Reporting.println("Goal: " + goal, R.INITIALIZATION);
 		    
+		    Statistics.startTracking();
 		    Solver s = new Solver(initial, goal);
-		    Stack<Move> solution = s.getSolution();
+		    Statistics.startTracking(S.RECURSING);
+		    Stack<Move> solution = s.getSolutionItr();
+		    //s = new Solver(initial, goal);
+		    //Stack<Move> solution = s.getSolution();
+	    	Statistics.endTracking();
+	    	
 		    if(solution == null){
 		    	System.exit(R.IMPOSSIBLE);
 		    }else{
@@ -46,6 +63,7 @@ public class Solver {
 			System.err.println("You must supply an input file and a goal file");
 			System.exit(R.NOT_ENOUGH_ARGS);
 		}
+		
 	}
 
 	/**
@@ -71,7 +89,66 @@ public class Solver {
 		return getSolution(0, maxDepth);
 	}
 	
+	private Stack<Move> getSolutionItr(){
+		Stack<Move> returnValue = null;
+		Stack<Move[]> levels = new Stack<Move[]>();
+		Stack<Integer> indices = new Stack<Integer>();
+		
+		Move[] end = new Move[0];
+		levels.push(end);
+		indices.push(0);
+		
+		Move[] rowMoves = currentBoard.getMoves();
+		int index = 0;
+		
+		while(!levels.empty()){
+			if(returnValue != null){
+				if(index < rowMoves.length){
+					returnValue.push(rowMoves[index]);
+					rowMoves = levels.pop();
+					index = indices.pop();
+				}else{
+					break;
+				}
+			}else{
+				if(!hasBeenSeen() || index > 0){
+					if(index == 0)
+						currentBoard.printBoard();
+					if(currentBoard.isSolved()){
+						returnValue = new Stack<Move>();
+						rowMoves = levels.pop();
+						if(rowMoves.equals(end)) break;
+						index = indices.pop();
+					}else{
+						if(index < rowMoves.length){
+							currentBoard.moveBlock(rowMoves[index]);
+							levels.push(rowMoves);
+							indices.push(index);
+							rowMoves = currentBoard.getMoves();
+							index = 0;
+						}else{
+							rowMoves = levels.pop();
+							if(rowMoves.equals(end)) break;
+							index = indices.pop();
+							currentBoard.unMoveBlock(rowMoves[index]);
+							index++;
+						}
+					}
+				}else{
+					rowMoves = levels.pop();
+					index = indices.pop();
+					if(rowMoves.equals(end)) break;
+					currentBoard.unMoveBlock(rowMoves[index]);
+					index++;
+				}
+			}
+		}
+		
+		return returnValue;
+	}
+	
 	private Stack<Move> getSolution(int depth, int maxDepth) {
+	    Statistics.endTracking(S.RECURSING);
 		if(depth > maxDepth) return null;
 		String prefix = depth + "> ";
 		
@@ -102,6 +179,7 @@ public class Solver {
 					System.exit(R.MOVE_ERROR);
 				}
 				try{
+				    Statistics.startTracking(S.RECURSING);
 					Stack<Move> subSol = getSolution(depth + 1, maxDepth);
 					Reporting.println(prefix + "Recieved sub-solution", R.SOLVE_FLOW);
 					if(subSol != null){
@@ -116,7 +194,7 @@ public class Solver {
 					Reporting.println(prefix + "Maximum Recursion Depth Reached...", R.SOLVE_FLOW);
 					Reporting.println(R.SOLVE_FLOW);
 					Reporting.println(R.SOLVE_FLOW);
-					//System.err.println(prefix + "Maximum Recursion depth Reached");
+					System.exit(MAX_DEPTH);
 				}
 				
 				Reporting.println(prefix + "Solution not found... Continuing", R.SOLVE_FLOW);
@@ -132,16 +210,19 @@ public class Solver {
 	}
 
 	private boolean hasBeenSeen() {
+		Statistics.startTracking(S.DUPLICATE_CHECK);
 		Reporting.println("** Copying Board", R.HASHING);
 		Board newBoard = new Board(currentBoard);
 		Reporting.println("** Board copied. Checking for duplicate", R.HASHING);
 		if(seenConfigurations.get(newBoard) != null){
 			Reporting.println("** Board found.", R.HASHING);
+			Statistics.endTracking(S.DUPLICATE_CHECK);
 			return true;
 		}else{
 			Reporting.println("** Board not found, Adding it to table", R.HASHING);
 			seenConfigurations.put(newBoard, true);
 			Reporting.println("** Board added.", R.HASHING);
+			Statistics.endTracking(S.DUPLICATE_CHECK);
 			return false;
 		}
 	}

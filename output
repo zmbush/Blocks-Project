@@ -1,0 +1,916 @@
+These should all say Verified
+*** Start with some solvable puzzles.
+
+trying init.from.handout
+
+Time Spent: 00:00.33
+Hashing:         9.090909%
+Finding Moves:   45.454548%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 9.090909%
+OUTPUT:          0.0%
+Other:           36.363636%
+
+Verified
+
+trying 1x1
+
+Time Spent: 00:00.11
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 9.090909%
+OUTPUT:          0.0%
+Other:           90.909096%
+
+Verified
+
+trying 1x2, one block
+
+Time Spent: 00:00.10
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 10.0%
+OUTPUT:          0.0%
+Other:           90.0%
+
+Verified
+
+trying 1x2, two blocks
+
+Time Spent: 00:00.10
+Hashing:         0.0%
+Finding Moves:   10.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           90.0%
+
+Verified
+
+trying easy
+
+Time Spent: 00:00.14
+Hashing:         0.0%
+Finding Moves:   7.1428576%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           92.85714%
+
+Verified
+
+trying full.1
+
+Time Spent: 00:00.9
+Hashing:         11.111112%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 11.111112%
+OUTPUT:          11.111112%
+Other:           66.66667%
+
+Verified
+
+trying big.block.1
+
+Time Spent: 00:00.16
+Hashing:         0.0%
+Finding Moves:   12.5%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 6.25%
+OUTPUT:          0.0%
+Other:           81.25%
+
+Verified
+
+trying big.block.2
+
+Time Spent: 00:00.15
+Hashing:         0.0%
+Finding Moves:   6.666667%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 6.666667%
+OUTPUT:          0.0%
+Other:           86.666664%
+
+Verified
+
+trying big.block.3
+
+Time Spent: 00:00.15
+Hashing:         0.0%
+Finding Moves:   13.333334%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           86.666664%
+
+Verified
+
+trying big.block.4
+
+Time Spent: 00:00.107
+Hashing:         14.953271%
+Finding Moves:   42.056076%
+Moving Blocks:   0.93457943%
+Printing Board:  0.93457943%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.93457943%
+Duplicate Check: 26.168224%
+OUTPUT:          3.7383177%
+Other:           10.280374%
+
+Verified
+
+trying big.tray.2
+
+Time Spent: 00:00.84
+Hashing:         0.0%
+Finding Moves:   83.33333%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 1.1904762%
+OUTPUT:          0.0%
+Other:           15.476191%
+
+Verified
+
+trying big.search.1
+
+Time Spent: 00:00.146
+Hashing:         18.49315%
+Finding Moves:   43.835617%
+Moving Blocks:   2.0547945%
+Printing Board:  0.0%
+Comparing:       0.6849315%
+Recursing:       0.0%
+Solution Test:   2.0547945%
+Duplicate Check: 20.547945%
+OUTPUT:          1.369863%
+Other:           10.958904%
+
+Verified
+
+trying big.search.2
+
+Time Spent: 00:00.21
+Hashing:         0.0%
+Finding Moves:   14.285715%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           85.71429%
+
+Verified
+
+trying check.diff.blocks
+
+Time Spent: 00:00.15
+Hashing:         6.666667%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 6.666667%
+OUTPUT:          0.0%
+Other:           86.666664%
+
+Verified
+
+trying enormous.full.1
+
+Time Spent: 00:00.37
+Hashing:         0.0%
+Finding Moves:   8.108108%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 35.135136%
+OUTPUT:          0.0%
+Other:           56.75676%
+
+Verified
+
+trying enormous.full.1
+
+Time Spent: 00:00.44
+Hashing:         0.0%
+Finding Moves:   6.818182%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 34.090908%
+OUTPUT:          0.0%
+Other:           59.090908%
+
+Verified
+
+trying forced.match.1
+
+Time Spent: 00:00.15
+Hashing:         0.0%
+Finding Moves:   6.666667%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          6.666667%
+Other:           86.666664%
+
+Verified
+
+trying forced.match.1+90
+
+Time Spent: 00:00.16
+Hashing:         6.25%
+Finding Moves:   6.25%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 6.25%
+OUTPUT:          0.0%
+Other:           81.25%
+
+Verified
+
+trying forced.match.2
+
+Time Spent: 00:00.14
+Hashing:         0.0%
+Finding Moves:   7.1428576%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           92.85714%
+
+Verified
+
+trying immed.match.0
+
+Time Spent: 00:00.12
+Hashing:         0.0%
+Finding Moves:   8.333334%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           91.66667%
+
+Verified
+
+trying immed.match.1
+
+Time Spent: 00:00.13
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           100.0%
+
+Verified
+
+trying immed.match.2
+
+Time Spent: 00:00.12
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           100.0%
+
+Verified
+
+trying immed.match.2+90
+
+Time Spent: 00:00.13
+Hashing:         7.692308%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 7.692308%
+OUTPUT:          0.0%
+Other:           84.61539%
+
+Verified
+
+trying immed.match.2+180
+
+Time Spent: 00:00.14
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 7.1428576%
+OUTPUT:          0.0%
+Other:           92.85714%
+
+Verified
+
+trying immed.match.2+270
+
+Time Spent: 00:00.14
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           100.0%
+
+Verified
+
+trying instant.match.0
+
+Time Spent: 00:00.10
+Hashing:         0.0%
+Finding Moves:   10.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           90.0%
+
+Verified
+
+trying instant.match.1
+
+Time Spent: 00:00.10
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           100.0%
+
+Verified
+
+trying instant.match.1+90
+
+Time Spent: 00:00.9
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           100.0%
+
+Verified
+
+trying instant.match.2
+
+Time Spent: 00:00.12
+Hashing:         0.0%
+Finding Moves:   8.333334%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           91.66667%
+
+Verified
+
+trying instant.match.3
+
+Time Spent: 00:00.11
+Hashing:         0.0%
+Finding Moves:   9.090909%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           90.909096%
+
+Verified
+
+trying instant.match.3+90
+
+Time Spent: 00:00.10
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           100.0%
+
+Verified
+
+trying no.move.1
+
+Time Spent: 00:00.10
+Hashing:         0.0%
+Finding Moves:   10.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           90.0%
+
+Verified
+
+trying no.move.2
+
+Time Spent: 00:00.10
+Hashing:         10.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 10.0%
+OUTPUT:          0.0%
+Other:           80.0%
+
+Verified
+
+trying no.move.3
+
+Time Spent: 00:00.9
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           100.0%
+
+Verified
+
+trying 140x140
+
+Time Spent: 00:00.173
+Hashing:         3.468208%
+Finding Moves:   67.63006%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 9.248554%
+OUTPUT:          0.0%
+Other:           19.65318%
+
+Verified
+
+trying small.search
+
+Time Spent: 00:00.28
+Hashing:         0.0%
+Finding Moves:   21.428572%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   3.5714288%
+Duplicate Check: 3.5714288%
+OUTPUT:          0.0%
+Other:           71.42857%
+
+Verified
+
+trying small.search+90
+
+Time Spent: 00:00.50
+Hashing:         4.0%
+Finding Moves:   42.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       2.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 12.0%
+OUTPUT:          2.0%
+Other:           38.0%
+
+Verified
+
+trying tree+90
+
+Time Spent: 00:00.20
+Hashing:         5.0%
+Finding Moves:   25.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 5.0%
+OUTPUT:          0.0%
+Other:           65.0%
+
+Verified
+
+trying tree+180
+
+Time Spent: 00:00.23
+Hashing:         13.043478%
+Finding Moves:   17.391304%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 13.043478%
+OUTPUT:          0.0%
+Other:           56.521736%
+
+Verified
+
+trying tree+270
+
+Time Spent: 00:00.23
+Hashing:         4.347826%
+Finding Moves:   17.391304%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 17.391304%
+OUTPUT:          0.0%
+Other:           60.869564%
+
+Verified
+
+trying tree
+
+Time Spent: 00:00.18
+Hashing:         5.555556%
+Finding Moves:   11.111112%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 5.555556%
+OUTPUT:          5.555556%
+Other:           72.22222%
+
+Verified
+
+*** Now try some unsolvable puzzles.
+
+trying enormous.3
+
+Time Spent: 00:00.114
+Hashing:         1.754386%
+Finding Moves:   25.438599%
+Moving Blocks:   21.052631%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 43.85965%
+OUTPUT:          0.0%
+Other:           7.8947363%
+
+Verified
+
+trying enormous.full.1
+
+Time Spent: 00:00.35
+Hashing:         0.0%
+Finding Moves:   8.571429%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 34.285717%
+OUTPUT:          2.857143%
+Other:           54.285717%
+
+Verified
+
+trying full.2
+
+Time Spent: 00:00.9
+Hashing:         0.0%
+Finding Moves:   11.111112%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           88.88889%
+
+Verified
+
+trying impossible.1
+
+Time Spent: 00:00.306
+Hashing:         32.026146%
+Finding Moves:   25.816996%
+Moving Blocks:   3.5947714%
+Printing Board:  0.0%
+Comparing:       4.5751634%
+Recursing:       0.0%
+Solution Test:   1.6339871%
+Duplicate Check: 58.823532%
+OUTPUT:          9.477124%
+Other:           -35.947712%
+
+Verified
+
+trying impossible.1+90
+
+Time Spent: 00:00.347
+Hashing:         25.9366%
+Finding Moves:   21.325647%
+Moving Blocks:   4.3227663%
+Printing Board:  0.0%
+Comparing:       5.1873198%
+Recursing:       0.0%
+Solution Test:   5.4755044%
+Duplicate Check: 53.31412%
+OUTPUT:          8.645533%
+Other:           -24.207493%
+
+Verified
+
+trying impossible.3
+
+Time Spent: 00:00.326
+Hashing:         24.846626%
+Finding Moves:   29.447853%
+Moving Blocks:   6.4417176%
+Printing Board:  0.0%
+Comparing:       2.4539876%
+Recursing:       0.0%
+Solution Test:   4.907975%
+Duplicate Check: 47.239265%
+OUTPUT:          4.6012273%
+Other:           -19.93865%
+
+Verified
+
+trying impossible.3x4
+
+Time Spent: 00:00.42
+Hashing:         16.666668%
+Finding Moves:   33.333336%
+Moving Blocks:   4.7619047%
+Printing Board:  0.0%
+Comparing:       4.7619047%
+Recursing:       0.0%
+Solution Test:   2.3809524%
+Duplicate Check: 28.57143%
+OUTPUT:          7.1428576%
+Other:           2.3809524%
+
+Verified
+
+trying impossible.4
+
+Time Spent: 00:00.491
+Hashing:         26.272913%
+Finding Moves:   25.865582%
+Moving Blocks:   4.480652%
+Printing Board:  0.0%
+Comparing:       1.8329939%
+Recursing:       0.0%
+Solution Test:   2.240326%
+Duplicate Check: 51.934826%
+OUTPUT:          9.164969%
+Other:           -21.792261%
+
+Verified
+
+trying impossible.4+90
+
+Time Spent: 00:00.424
+Hashing:         21.462265%
+Finding Moves:   29.95283%
+Moving Blocks:   4.0094337%
+Printing Board:  0.23584905%
+Comparing:       2.5943396%
+Recursing:       0.0%
+Solution Test:   2.1226416%
+Duplicate Check: 50.70755%
+OUTPUT:          9.905661%
+Other:           -20.990566%
+
+Verified
+
+trying impossible.4+180
+
+Time Spent: 00:00.473
+Hashing:         31.078226%
+Finding Moves:   32.34672%
+Moving Blocks:   2.9598308%
+Printing Board:  0.42283297%
+Comparing:       2.7484143%
+Recursing:       0.0%
+Solution Test:   1.0570824%
+Duplicate Check: 52.219875%
+OUTPUT:          10.570825%
+Other:           -33.403805%
+
+Verified
+
+trying impossible.4+270
+
+Time Spent: 00:00.497
+Hashing:         23.138832%
+Finding Moves:   29.778671%
+Moving Blocks:   4.024145%
+Printing Board:  0.20120724%
+Comparing:       2.2132797%
+Recursing:       0.0%
+Solution Test:   2.414487%
+Duplicate Check: 48.08853%
+OUTPUT:          8.853119%
+Other:           -18.712273%
+
+Verified
+
+trying impossible.4x3
+
+Time Spent: 00:00.42
+Hashing:         26.190477%
+Finding Moves:   28.57143%
+Moving Blocks:   2.3809524%
+Printing Board:  0.0%
+Comparing:       2.3809524%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 40.476192%
+OUTPUT:          2.3809524%
+Other:           -2.3809524%
+
+Verified
+
+trying no.move.1
+
+Time Spent: 00:00.12
+Hashing:         0.0%
+Finding Moves:   8.333334%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           91.66667%
+
+Verified
+
+trying no.move.2
+
+Time Spent: 00:00.11
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          9.090909%
+Other:           90.909096%
+
+Verified
+
+trying no.move.3
+
+Time Spent: 00:00.11
+Hashing:         0.0%
+Finding Moves:   0.0%
+Moving Blocks:   0.0%
+Printing Board:  9.090909%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           90.909096%
+
+Verified
+
+trying one.move.1
+
+Time Spent: 00:00.11
+Hashing:         0.0%
+Finding Moves:   9.090909%
+Moving Blocks:   0.0%
+Printing Board:  0.0%
+Comparing:       0.0%
+Recursing:       0.0%
+Solution Test:   0.0%
+Duplicate Check: 0.0%
+OUTPUT:          0.0%
+Other:           90.909096%
+
+Verified
