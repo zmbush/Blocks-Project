@@ -19,6 +19,9 @@ public class Board {
 	public static final String[] DIRECTION_NAMES = { "up", "left", "down", "right" };
 	public static final int DIRECTIONS = 4;
 	
+	private int hashes = 0;
+	private int equals = 0;
+	
 	public static void main(String[] args) {
 		Board cb = new Board("puzzles/easy/big.block.4", "puzzles/easy/big.block.4.goal");
 		Reporting.flagOn("draw-board");
@@ -210,6 +213,8 @@ public class Board {
 			for(int i = 0; i < displayLines.length; i++){
 				Reporting.println(displayLines[i].toString(), R.DRAW_BOARD);
 			}
+			Reporting.println(new Integer(this.hashCode()).toString(), R.DRAW_BOARD);
+			Reporting.println("Collisions so far: " + equals, R.DRAW_BOARD);
 			return;
 		}
 		Statistics.endTracking(S.PRINTING_BOARD);
@@ -257,9 +262,17 @@ public class Board {
 		switch(direction){
 		case DOWN:
 			if(b.getY() + b.getHeight() + distance - 1 >= blocks.length) return false;
-			for(int offset = 0; offset < distance; offset++){
+			if(slow){
+				for(int offset = 0; offset < distance; offset++){
+					for(int i = 0; i < b.getWidth(); i++){
+						if(blocks[b.getY() + b.getHeight() + offset][b.getX() + i] != null){
+							return false;
+						}
+					}
+				}
+			}else{
 				for(int i = 0; i < b.getWidth(); i++){
-					if(blocks[b.getY() + b.getHeight() + offset][b.getX() + i] != null){
+					if(blocks[b.getY() + b.getHeight() + distance - 1][b.getX() + i] != null){
 						return false;
 					}
 				}
@@ -267,19 +280,36 @@ public class Board {
 			return true;
 		case UP:
 			if(b.getY() - distance + 1 <= 0) return false;
-			for(int offset = 0; offset < distance; offset++){
+			if(slow){
+				for(int offset = 0; offset < distance; offset++){
+					for(int i = 0; i < b.getWidth(); i++){
+						if(blocks[b.getY() - offset - 1][b.getX() + i] != null){
+							return false;
+						}
+					}
+				}
+			}else{
 				for(int i = 0; i < b.getWidth(); i++){
-					if(blocks[b.getY() - offset - 1][b.getX() + i] != null){
+					if(blocks[b.getY() - distance][b.getX() + i] != null){
 						return false;
 					}
 				}
+				
 			}
 			return true;
 		case LEFT:
 			if(b.getX() - distance + 1 <= 0) return false;
-			for(int offset = 0; offset < distance; offset++){
+			if(slow){
+				for(int offset = 0; offset < distance; offset++){
+					for(int i = 0; i < b.getHeight(); i++){
+						if(blocks[b.getY() + i][b.getX() - offset - 1] != null){
+							return false;
+						}
+					}
+				}
+			}else{
 				for(int i = 0; i < b.getHeight(); i++){
-					if(blocks[b.getY() + i][b.getX() - offset - 1] != null){
+					if(blocks[b.getY() + i][b.getX() - distance] != null){
 						return false;
 					}
 				}
@@ -287,9 +317,17 @@ public class Board {
 			return true;
 		case RIGHT:
 			if(b.getX() + b.getWidth() + distance - 1 >= blocks[0].length) return false;
-			for(int offset = 0; offset < distance; offset++){
+			if(slow){
+				for(int offset = 0; offset < distance; offset++){
+					for(int i = 0; i < b.getHeight(); i++){
+						if(blocks[b.getY() + i][b.getX() + b.getWidth() + offset] != null){
+							return false;
+						}
+					}
+				}
+			}else{
 				for(int i = 0; i < b.getHeight(); i++){
-					if(blocks[b.getY() + i][b.getX() + b.getWidth() + offset] != null){
+					if(blocks[b.getY() + i][b.getX() + b.getWidth() + distance - 1] != null){
 						return false;
 					}
 				}
@@ -302,6 +340,7 @@ public class Board {
 		Statistics.startTracking(S.FIND_MOVES);
 		Move[] unsorted = getMovesUnsorted();
 		
+		/*
 		for(int i = 0; i < unsorted.length; i++){
 			for(int j = 0; j < unsorted.length - i - 1; j++){
 				if(moveValue(unsorted[j]) > moveValue(unsorted[j + 1])){
@@ -311,6 +350,8 @@ public class Board {
 				}
 			}
 		}
+		*/
+		
 		Statistics.endTracking(S.FIND_MOVES);
 		return unsorted;
 	}
@@ -331,18 +372,38 @@ public class Board {
 	public Move[] getMovesUnsorted(){
 		Reporting.println("Starting to Get Moves", R.MOVEMENT);
 		LinkedList<Move> moves = new LinkedList<Move>();
-		int dist = Math.max(width, height);
-		while(dist != 0){
+
+		/*
+		for(int dir = UP; dir < DIRECTIONS; dir++){
 			for(int i = 0; i < this.boardBlocks.size(); i++){
-				for(int dir = UP; dir < DIRECTIONS; dir++){
-					Move thisMove = new Move(i, dir, dist, boardBlocks.get(i));
-					if(this.canMove(thisMove)){
-						moves.add(thisMove);
-					}
+				Move thisMove = new Move(i, dir, 1, boardBlocks.get(i));
+				if(this.canMove(thisMove)){
+					moves.add(thisMove);
 				}
 			}
-			dist--;
+		}	
+		*/
+		boolean stillGood[][] = new boolean[this.boardBlocks.size()][4];
+		for(int i = 0; i < stillGood.length; i++){
+			for(int j = 0; j < stillGood[0].length; j++){
+				stillGood[i][j] = true;
+			}
 		}
+		
+		int dist = Math.max(width, height);
+		for(int d = 1; d <= dist; d++){
+			for(int i = 0; i < this.boardBlocks.size(); i++){
+				for(int dir = UP; dir < DIRECTIONS; dir++){
+					Move thisMove = new Move(i, dir, d, boardBlocks.get(i));
+					if(this.canMove(thisMove) && stillGood[i][dir]){
+						moves.add(thisMove);
+					}else{
+						stillGood[i][dir] = false;
+					}
+				}
+			}	
+		}
+		
 		Reporting.println("Moves gotten", R.MOVEMENT);
 		return moves.toArray(new Move[0]);
 	}
@@ -360,8 +421,19 @@ public class Board {
 	
 	@Override
 	public int hashCode(){
+		Statistics.postHash();
 		Statistics.startTracking(S.HASHING);
 		Reporting.println("Entering Hash Function for Board", R.HASHING);
+		int b     = 378551;
+		int a     = 63689;
+		long hash = 0;
+		for(int i = 0; i < boardBlocks.size(); i++){
+		   hash = hash * a + boardBlocks.get(i).hashCode();
+		   a    = a * b;
+		}
+		Statistics.endTracking(S.HASHING);
+		return (int)hash;
+		/*
 		String toHash = "";
 		for(int i = 0; i < boardBlocks.size(); i++){
 			Block current =  boardBlocks.get(i);
@@ -381,17 +453,18 @@ public class Board {
 		Reporting.println("Leaving Hash Function for Board", R.HASHING);
 		int retval = toHash.hashCode();
 		Statistics.endTracking(S.HASHING);
-		return retval;
+		return retval;*/
 	}
-	
 	@Override
 	public boolean equals(Object obj){
+		Statistics.postEquals();
 		Statistics.startTracking(S.COMPARING);
 		Board r = (Board)obj;
 		if(this.boardBlocks.size() != r.boardBlocks.size()) return false;
 		for(int i = 0; i < this.boardBlocks.size(); i++){
 			if(!boardBlocks.get(i).equals(r.boardBlocks.get(i))){
 				Statistics.endTracking(S.COMPARING);
+				Statistics.postCollide();
 				return false;
 			}
 		}

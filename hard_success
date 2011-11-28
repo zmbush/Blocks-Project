@@ -1,6 +1,7 @@
 #!/bin/bash
 
-SUCCESS=`cat hard_run | grep Verified | wc -l`
-TOTAL=`cat hard_run | grep "\-\-\- test" | wc -l`
+SUCCESS=`cat hard_run$1 | grep Verified | wc -l`
+FAIL=`cat hard_run$1 | grep "incorrect solver output" | wc -l`
+TOTAL=`python -c "print $SUCCESS + $FAIL"`
 python -c "print \"$SUCCESS/$TOTAL (\" + str(($SUCCESS / float($TOTAL))*100) \
 + \"%)\""

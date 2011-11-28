@@ -100,9 +100,10 @@ public class Solver {
 		
 		Move[] rowMoves = currentBoard.getMoves();
 		int index = 0;
+		boolean good = false;
 		
 		while(!levels.empty()){
-			if(returnValue != null){
+			if(returnValue != null){// Unwinding with return value
 				if(index < rowMoves.length){
 					returnValue.push(rowMoves[index]);
 					rowMoves = levels.pop();
@@ -111,37 +112,31 @@ public class Solver {
 					break;
 				}
 			}else{
-				if(!hasBeenSeen() || index > 0){
-					if(index == 0)
-						currentBoard.printBoard();
-					if(currentBoard.isSolved()){
-						returnValue = new Stack<Move>();
-						rowMoves = levels.pop();
-						if(rowMoves.equals(end)) break;
-						index = indices.pop();
-					}else{
-						if(index < rowMoves.length){
-							currentBoard.moveBlock(rowMoves[index]);
-							levels.push(rowMoves);
-							indices.push(index);
-							rowMoves = currentBoard.getMoves();
-							index = 0;
-						}else{
-							rowMoves = levels.pop();
-							if(rowMoves.equals(end)) break;
-							index = indices.pop();
-							currentBoard.unMoveBlock(rowMoves[index]);
-							index++;
-						}
-					}
+				if(index > 0)
+					good = true;
+				else
+					good = !hasBeenSeen();
+				if(good && index == 0)
+					currentBoard.printBoard();
+				if(good && currentBoard.isSolved()){
+					returnValue = new Stack<Move>();
+					rowMoves = levels.pop();
+					if(rowMoves.equals(end)) break;
+					index = indices.pop();
+				}else if(good & index < rowMoves.length){
+					currentBoard.moveBlock(rowMoves[index]);
+					levels.push(rowMoves);
+					indices.push(index);
+					rowMoves = currentBoard.getMoves();
+					index = 0;
 				}else{
 					rowMoves = levels.pop();
 					index = indices.pop();
 					if(rowMoves.equals(end)) break;
 					currentBoard.unMoveBlock(rowMoves[index]);
-					index++;
+					index++;		
 				}
-			}
+			}	
 		}
 		
 		return returnValue;
@@ -210,10 +205,15 @@ public class Solver {
 	}
 
 	private boolean hasBeenSeen() {
+		Statistics.postSeenBoards(seenConfigurations.size());
 		Statistics.startTracking(S.DUPLICATE_CHECK);
 		Reporting.println("** Copying Board", R.HASHING);
 		Board newBoard = new Board(currentBoard);
 		Reporting.println("** Board copied. Checking for duplicate", R.HASHING);
+		boolean ret = seenConfigurations.put(newBoard, true) != null;
+		Statistics.endTracking(S.DUPLICATE_CHECK);
+		return ret;
+		/*
 		if(seenConfigurations.get(newBoard) != null){
 			Reporting.println("** Board found.", R.HASHING);
 			Statistics.endTracking(S.DUPLICATE_CHECK);
@@ -224,6 +224,6 @@ public class Solver {
 			Reporting.println("** Board added.", R.HASHING);
 			Statistics.endTracking(S.DUPLICATE_CHECK);
 			return false;
-		}
+		}*/
 	}
 }

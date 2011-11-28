@@ -8,6 +8,10 @@ public class Statistics {
 	private static long[] accumulatedTimes = new long[S.STAT_TYPES.length];
 	private static long startTime = 0;
 	private static long totalTime = 0;
+	private static int hashes = 0;
+	private static int equals = 0;
+	private static int collide = 0;
+	private static int seenBoards = 0;
 	
 	public static void startTracking(){
 		startTime = ManagementFactory.getRuntimeMXBean().getUptime();
@@ -24,6 +28,19 @@ public class Statistics {
 	public static void endTracking(){
 		totalTime = ManagementFactory.getRuntimeMXBean().getUptime() - startTime;
 		//totalTime -= accumulatedTimes[S.OUTPUT];
+	}
+	
+	public static void postHash(){
+		hashes++;
+	}
+	public static void postEquals(){
+		equals++;
+	}
+	public static void postCollide(){
+		collide++;
+	}
+	public static void postSeenBoards(int boards){
+		seenBoards = boards;
 	}
 	public static void printStats(){
 		System.err.println();
@@ -42,6 +59,10 @@ public class Statistics {
 			System.err.println(S.STAT_TYPES[i] + perc + "%");
 		}
 		System.err.println("Other:           " + (other / (float)totalTime) * 100 + "%");
+		System.err.println("Collisions: " + collide);
+		System.err.println("Lookups: " + hashes);
+		System.err.println("Percentage: " + (collide / (float)hashes) * 100);
+		System.err.println("Boards seen: " + seenBoards);
 		System.err.println();
 	}
 }
