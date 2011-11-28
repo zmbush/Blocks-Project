@@ -373,7 +373,7 @@ public class Board {
 		Reporting.println("Starting to Get Moves", R.MOVEMENT);
 		LinkedList<Move> moves = new LinkedList<Move>();
 
-		/*
+		/**/
 		for(int dir = UP; dir < DIRECTIONS; dir++){
 			for(int i = 0; i < this.boardBlocks.size(); i++){
 				Move thisMove = new Move(i, dir, 1, boardBlocks.get(i));
@@ -382,7 +382,8 @@ public class Board {
 				}
 			}
 		}	
-		*/
+		/**/
+		/*/
 		boolean stillGood[][] = new boolean[this.boardBlocks.size()][4];
 		for(int i = 0; i < stillGood.length; i++){
 			for(int j = 0; j < stillGood[0].length; j++){
@@ -403,9 +404,10 @@ public class Board {
 				}
 			}	
 		}
-		
+		/**/
 		Reporting.println("Moves gotten", R.MOVEMENT);
 		return moves.toArray(new Move[0]);
+		
 	}
 	public boolean unMoveBlock(Move move) {
 		return moveBlock(move.reverse());
