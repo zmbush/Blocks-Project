@@ -373,7 +373,7 @@ public class Board {
 		Reporting.println("Starting to Get Moves", R.MOVEMENT);
 		LinkedList<Move> moves = new LinkedList<Move>();
 
-		/**/
+		/*/
 		for(int dir = UP; dir < DIRECTIONS; dir++){
 			for(int i = 0; i < this.boardBlocks.size(); i++){
 				Move thisMove = new Move(i, dir, 1, boardBlocks.get(i));
@@ -383,7 +383,7 @@ public class Board {
 			}
 		}	
 		/**/
-		/*/
+		/**/
 		boolean stillGood[][] = new boolean[this.boardBlocks.size()][4];
 		for(int i = 0; i < stillGood.length; i++){
 			for(int j = 0; j < stillGood[0].length; j++){
@@ -426,6 +426,8 @@ public class Board {
 		Statistics.postHash();
 		Statistics.startTracking(S.HASHING);
 		Reporting.println("Entering Hash Function for Board", R.HASHING);
+		
+		/*/
 		int b     = 378551;
 		int a     = 63689;
 		long hash = 0;
@@ -435,7 +437,8 @@ public class Board {
 		}
 		Statistics.endTracking(S.HASHING);
 		return (int)hash;
-		/*
+		/**/
+		/**/
 		String toHash = "";
 		for(int i = 0; i < boardBlocks.size(); i++){
 			Block current =  boardBlocks.get(i);
@@ -455,7 +458,8 @@ public class Board {
 		Reporting.println("Leaving Hash Function for Board", R.HASHING);
 		int retval = toHash.hashCode();
 		Statistics.endTracking(S.HASHING);
-		return retval;*/
+		return retval;
+		/**/
 	}
 	@Override
 	public boolean equals(Object obj){
