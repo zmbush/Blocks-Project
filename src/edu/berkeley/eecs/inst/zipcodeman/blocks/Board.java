@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 
@@ -439,12 +440,30 @@ public class Board {
 		return (int)hash;
 		/**/
 		/**/
+		// Probably a stupid idea
+		Hashtable<Block,Boolean> seenBlocks = new Hashtable<Block,Boolean>();
+		String toHash = "";
+		for(int y = 0; y < blocks.length; y++){
+			for(int x = 0; x < blocks[y].length; x++){
+				if(blocks[y][x] != null){
+					Block current =  blocks[y][x];
+					if(seenBlocks.put(current, true) == null){
+						toHash += current.getHeight() + " " + current.getWidth() + 
+								  " " + current.getX() + " " + current.getY();
+					}else{
+						x = current.getX() + current.getHeight();
+					}
+				}
+			}
+		}
+		/*
 		String toHash = "";
 		for(int i = 0; i < boardBlocks.size(); i++){
 			Block current =  boardBlocks.get(i);
 			toHash += current.getHeight() + " " + current.getWidth() + 
 					  " " + current.getX() + " " + current.getY();
 		}
+		*/
 		// Really Slow for large boards. 
 //		for(int y = 0; y < blocks.length; y++){
 //			for(int x = 0; x < blocks[y].length; x++){
@@ -468,12 +487,20 @@ public class Board {
 		Board r = (Board)obj;
 		if(this.boardBlocks.size() != r.boardBlocks.size()) return false;
 		for(int i = 0; i < this.boardBlocks.size(); i++){
-			if(!boardBlocks.get(i).equals(r.boardBlocks.get(i))){
+			if(!r.hasBlock(boardBlocks.get(i))){
 				Statistics.endTracking(S.COMPARING);
 				Statistics.postCollide();
 				return false;
 			}
 		}
+		/*
+		for(int i = 0; i < this.boardBlocks.size(); i++){
+			if(!boardBlocks.get(i).equals(r.boardBlocks.get(i))){
+				Statistics.endTracking(S.COMPARING);
+				Statistics.postCollide();
+				return false;
+			}
+		}*/
 		Statistics.endTracking(S.COMPARING);
 		return true;
 	}
