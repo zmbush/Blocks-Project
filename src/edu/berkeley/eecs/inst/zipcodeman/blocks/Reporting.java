@@ -58,6 +58,7 @@ public class Reporting {
 	}
 	
 	public static void print(String out, int flags){
+		
 		Statistics.startTracking(S.OUTPUT);
 		
 		if(canPrint(flags)){
@@ -65,12 +66,14 @@ public class Reporting {
 		}
 		
 		Statistics.endTracking(S.OUTPUT);
+		
 	}
 	
 	public static void println(int flags){
 		println("", flags);
 	}
 	public static void println(String out, int flags){
+		
 		Statistics.startTracking(S.OUTPUT);
 		
 		if(canPrint(flags)){
@@ -78,6 +81,7 @@ public class Reporting {
 		}
 		
 		Statistics.endTracking(S.OUTPUT);
+		
 	}
 	public static boolean canPrint(int flags){
 		if((flags & flagsOn) == flags){

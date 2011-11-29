@@ -93,25 +93,30 @@ public class Solver {
 		Stack<Move> returnValue = null;
 		Stack<Move[]> levels = new Stack<Move[]>();
 		Stack<Integer> indices = new Stack<Integer>();
+		int depth = 0;
 		
 		Move[] end = new Move[0];
 		levels.push(end);
 		indices.push(0);
 		
-		Move[] rowMoves = currentBoard.getMoves();
+		Move[] rowMoves = null;
 		int index = 0;
 		boolean good = false;
-		
+		String prefix;
 		while(!levels.empty()){
+			prefix = depth + "> ";
 			if(returnValue != null){// Unwinding with return value
+				Reporting.println(prefix + " unwinding with a solution", R.SOLVE_FLOW);
 				if(index < rowMoves.length){
 					returnValue.push(rowMoves[index]);
 					rowMoves = levels.pop();
 					index = indices.pop();
+					depth--;
 				}else{
 					break;
 				}
 			}else{
+				Reporting.println(prefix + "Looking for solution at depth: " + depth, R.SOLVE_FLOW);
 				if(index > 0)
 					good = true;
 				else
@@ -119,25 +124,36 @@ public class Solver {
 				if(good && index == 0)
 					currentBoard.printBoard();
 				if(good && currentBoard.isSolved()){
+					Reporting.println(prefix + " Solution found. Preparing to uwind", R.SOLVE_FLOW);
 					returnValue = new Stack<Move>();
 					rowMoves = levels.pop();
 					if(rowMoves.equals(end)) break;
 					index = indices.pop();
-				}else if(good & index < rowMoves.length){
+					depth--;
+				}else if(good && (index == 0 || index < rowMoves.length)){
+					if(index == 0){
+						Reporting.println(prefix + "Preparing new moves", R.SOLVE_FLOW);
+						rowMoves = currentBoard.getMoves();
+						if(rowMoves.length == 0) continue;
+					}
+					Reporting.println(prefix + " Board not solved. making move: " + rowMoves[index], R.SOLVE_FLOW);
 					currentBoard.moveBlock(rowMoves[index]);
 					levels.push(rowMoves);
 					indices.push(index);
-					rowMoves = currentBoard.getMoves();
 					index = 0;
+					depth++;
 				}else{
+					Reporting.println(prefix + "Dead end here. rolling back", R.SOLVE_FLOW);
 					rowMoves = levels.pop();
 					index = indices.pop();
 					if(rowMoves.equals(end)) break;
 					currentBoard.unMoveBlock(rowMoves[index]);
 					index++;		
+					depth--;
 				}
 			}	
 		}
+		Reporting.println("Descision made.", R.SOLVE_FLOW);
 		
 		return returnValue;
 	}

@@ -27,13 +27,37 @@ public class Board {
 		Board cb = new Board("puzzles/easy/big.block.4", "puzzles/easy/big.block.4.goal");
 		Reporting.flagOn("draw-board");
 		cb.printBoard();
-		for(int i = 0; i < cb.boardBlocks.size(); i++){
-			Block c = cb.boardBlocks.get(i);
-			Move mu = new Move(i, UP, c);
-			Move md = new Move(i, DOWN, c);
-			Move ml = new Move(i, LEFT, c);
-			Move mr = new Move(i, RIGHT, c);
+		for(int dist = 1; dist <= Math.max(cb.height, cb.width); dist++){
+			for(int i = 0; i < cb.boardBlocks.size(); i++){
+				Block c = cb.boardBlocks.get(i);
+				for(int dir = UP; dir < 4; dir++){
+					Move m = new Move(i, dir, dist, c);
+					System.out.println("Dir: " + DIRECTION_NAMES[dir] + 
+							" distance: " + dist + " block: " + i +
+							" Can move? " + cb.canMove(m));
+				}
+			}
 		}
+		System.out.println();
+		System.out.println("Moves: ");
+		Move m[] = cb.getMoves();
+		for(int i = 0; i < m.length; i++){
+			System.out.println(m[i]);
+		}
+		
+		System.out.println();
+		System.out.println("Moving Block");
+		cb.moveBlock(m[0]);
+		cb.printBoard();
+		System.out.println();
+		System.out.println("Moves: ");
+		Move m2[] = cb.getMoves();
+		for(int i = 0; i < m2.length; i++){
+			System.out.println(m2[i]);
+		}
+		System.out.println("Un-moving block");
+		cb.unMoveBlock(m[0]);
+		cb.printBoard();
 	}
 	public boolean isSolved() {
 		Statistics.startTracking(S.SOLUTION_TEST);
@@ -353,6 +377,7 @@ public class Board {
 		}
 		*/
 		
+		
 		Statistics.endTracking(S.FIND_MOVES);
 		return unsorted;
 	}
@@ -439,7 +464,7 @@ public class Board {
 		Statistics.endTracking(S.HASHING);
 		return (int)hash;
 		/**/
-		/**/
+		/*/
 		// Probably a stupid idea
 		Hashtable<Block,Boolean> seenBlocks = new Hashtable<Block,Boolean>();
 		String toHash = "";
@@ -456,14 +481,14 @@ public class Board {
 				}
 			}
 		}
-		/*
+		/**/
+		
 		String toHash = "";
 		for(int i = 0; i < boardBlocks.size(); i++){
 			Block current =  boardBlocks.get(i);
-			toHash += current.getHeight() + " " + current.getWidth() + 
-					  " " + current.getX() + " " + current.getY();
+			toHash += current.getHeight() + " " + current.getWidth() + " " + current.getX() + " " + current.getY();
 		}
-		*/
+		
 		// Really Slow for large boards. 
 //		for(int y = 0; y < blocks.length; y++){
 //			for(int x = 0; x < blocks[y].length; x++){
@@ -486,6 +511,7 @@ public class Board {
 		Statistics.startTracking(S.COMPARING);
 		Board r = (Board)obj;
 		if(this.boardBlocks.size() != r.boardBlocks.size()) return false;
+		/*
 		for(int i = 0; i < this.boardBlocks.size(); i++){
 			if(!r.hasBlock(boardBlocks.get(i))){
 				Statistics.endTracking(S.COMPARING);
@@ -493,14 +519,14 @@ public class Board {
 				return false;
 			}
 		}
-		/*
+		*/
 		for(int i = 0; i < this.boardBlocks.size(); i++){
 			if(!boardBlocks.get(i).equals(r.boardBlocks.get(i))){
 				Statistics.endTracking(S.COMPARING);
 				Statistics.postCollide();
 				return false;
 			}
-		}*/
+		}
 		Statistics.endTracking(S.COMPARING);
 		return true;
 	}
