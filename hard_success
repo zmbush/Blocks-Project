@@ -3,5 +3,8 @@
 SUCCESS=`cat hard_run$1 | grep Verified | wc -l`
 FAIL=`cat hard_run$1 | grep "incorrect solver output" | wc -l`
 TOTAL=`python -c "print $SUCCESS + $FAIL"`
+WINSTR=`cat hard_run$1 | grep -E "(Verified|incorrect solver output)"`
+WINS=`echo "$WINSTR" | sed -e "s/Verified/1/g" | sed -e "s/^.*incorrect.*$/0/g"`
 python -c "print \"$SUCCESS/$TOTAL (\" + str(($SUCCESS / float($TOTAL))*100) \
 + \"%)\""
+echo $WINS
