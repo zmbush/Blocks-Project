@@ -6,3 +6,4 @@ bin
 *.dvi
 *.pdf
 *.log
+hard_run*
