@@ -17,7 +17,7 @@ public class Board {
 	public static final int LEFT = 1;
 	public static final int DOWN = 2;
 	public static final int RIGHT = 3;
-	public static final String[] DIRECTION_NAMES = { "up", "left", "down", "right" };
+	public static final String[] DIRECTION_NAMES = { "Up", "Left", "Down", "Right" };
 	public static final int DIRECTIONS = 4;
 	
 	private int hashes = 0;
