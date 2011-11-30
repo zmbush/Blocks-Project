@@ -27,10 +27,26 @@ public class Board {
 		Board cb = new Board("puzzles/easy/big.block.4", "puzzles/easy/big.block.4.goal");
 		Reporting.flagOn("draw-board");
 		cb.printBoard();
+		Move m = new Move(0, UP, 1, cb.boardBlocks.get(0));
+		assert cb.canMove(m) == false : "canMove failure";
+		m = new Move(2, RIGHT, 2, cb.boardBlocks.get(2));
+		assert cb.canMove(m) == true : "canMove failure";
+		m = new Move(2, RIGHT, 1, cb.boardBlocks.get(2));
+		assert cb.canMove(m) == true : "canMove failure";
+		m = new Move(3, DOWN, 1, cb.boardBlocks.get(3));
+		assert cb.canMove(m) == true : "canMove failure";
+		m = new Move(5, UP, 1, cb.boardBlocks.get(5));
+		assert cb.canMove(m) == true : "canMove failure";
+		Move ms[] = cb.getMoves();
+		for(int i = 0; i < ms.length; i++){
+			System.out.println(ms[i]);
+		}
+		
+		/*
 		for(int dist = 1; dist <= Math.max(cb.height, cb.width); dist++){
 			for(int i = 0; i < cb.boardBlocks.size(); i++){
 				Block c = cb.boardBlocks.get(i);
-				for(int dir = UP; dir < 4; dir++){
+				for(int dir = UP; dir < DIRECTIONS; dir++){
 					Move m = new Move(i, dir, dist, c);
 					System.out.println("Dir: " + DIRECTION_NAMES[dir] + 
 							" distance: " + dist + " block: " + i +
@@ -58,6 +74,7 @@ public class Board {
 		System.out.println("Un-moving block");
 		cb.unMoveBlock(m[0]);
 		cb.printBoard();
+		*/
 	}
 	public boolean isSolved() {
 		Statistics.startTracking(S.SOLUTION_TEST);
