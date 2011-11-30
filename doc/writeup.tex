@@ -134,6 +134,26 @@ optimizations could be done, but to get the code working, we will just convert
 the board to a string and hash that string, using string's hashing function. 
 \label{ssec:checkDup}
 
+\section{Optimization}
+\subsection{Iteration not Recursion}
+By managing my own stacks to keep track of variables, the previous limit on
+recursion depth is completely removed. By managing my own stack, the size can
+be much larger than that of the standard Java call stack. 
+
+The functionality of the code after the change to iteration is essentially the
+same. 
+
+\subsection{Remove output functions}
+Early testing showed that there was a significant amount of time being spent
+on output. However after other optimizations, there was no significant gain in
+efficiency from removing output. 
+
+\subsection{Fix duplicate checking function}
+The original implementation of the duplicate checking function would call first
+check if the board was in the hashtable then add it if it wasn't. The better
+option is to simply put it into the hashtable, becaues the hashtable will
+return the value of the previous element with that hash. 
+
 
 \sourcePackage{edu/berkeley/eecs/inst/zipcodeman/blocks}
 		      {edu.berkeley.eecs.inst.zipcodeman.blocks}
